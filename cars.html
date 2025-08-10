@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cars - asab</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-emerald-600 to-emerald-400 text-white min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <header class="bg-emerald-700/90 backdrop-blur-sm sticky top-0 z-50 shadow-md">
+    <div class="container mx-auto flex justify-between items-center p-4">
+      <h1 class="text-2xl font-bold cursor-pointer" onclick="window.location.href='index.html'">asab</h1>
+      <nav class="space-x-6">
+        <a href="index.html" class="hover:text-yellow-300 transition">Home</a>
+        <a href="Cars.html" class="hover:text-yellow-300 transition font-semibold underline">Cars</a>
+        <a href="booking.html" class="hover:text-yellow-300 transition">Booking</a>
+        <a href="contact.html" class="hover:text-yellow-300 transition">Contact</a>
+        <a href="about.html" class="hover:text-yellow-300 transition">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-grow container mx-auto p-6 max-w-6xl">
+    <h2 class="text-4xl font-bold mb-8 text-white text-center">Our Cars</h2>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Car 1: Toyota Corolla -->
+      <div class="bg-white rounded-xl overflow-hidden shadow hover:shadow-lg transition text-gray-800 flex flex-col">
+        <img src="https://via.placeholder.com/600x400?text=Toyota+Corolla" alt="Toyota Corolla" class="w-full h-48 object-cover" />
+        <div class="p-6 flex flex-col flex-grow">
+          <h3 class="font-semibold text-xl mb-2">Toyota Corolla (2021)</h3>
+          <p class="text-sm text-gray-600 mb-2">Reliable and fuel-efficient sedan perfect for city driving and road trips.</p>
+          <ul class="text-gray-700 text-sm mb-4 flex flex-wrap gap-4">
+            <li><strong>Transmission:</strong> Automatic</li>
+            <li><strong>Seats:</strong> 5</li>
+            <li><strong>Price:</strong> ₵45/day</li>
+          </ul>
+          <div class="mt-auto flex gap-4">
+            <a href="booking.html?car=Toyota+Corolla"
+               class="flex-1 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition text-center inline-block"
+            >
+              Book now
+            </a>
+            <a href="car-details.html?car=toyota-corolla"
+               class="flex-1 px-4 py-2 border border-emerald-600 rounded-lg text-emerald-600 hover:bg-emerald-600 hover:text-white transition text-center inline-block"
+            >
+              Details
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Car 2: Honda Civic -->
+      <div class="bg-white rounded-xl overflow-hidden shadow hover:shadow-lg transition text-gray-800 flex flex-col">
+        <img src="https://via.placeholder.com/600x400?text=Honda+Civic" alt="Honda Civic" class="w-full h-48 object-cover" />
+        <div class="p-6 flex flex-col flex-grow">
+          <h3 class="font-semibold text-xl mb-2">Honda Civic (2020)</h3>
+          <p class="text-sm text-gray-600 mb-2">Sporty compact car with excellent handling and performance.</p>
+          <ul class="text-gray-700 text-sm mb-4 flex flex-wrap gap-4">
+            <li><strong>Transmission:</strong> Manual</li>
+            <li><strong>Seats:</strong> 5</li>
+            <li><strong>Price:</strong> ₵48/day</li>
+          </ul>
+          <div class="mt-auto flex gap-4">
+            <a href="booking.html?car=Honda+Civic"
+               class="flex-1 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition text-center inline-block"
+            >
+              Book now
+            </a>
+            <a href="car-details.html?car=honda-civic"
+               class="flex-1 px-4 py-2 border border-emerald-600 rounded-lg text-emerald-600 hover:bg-emerald-600 hover:text-white transition text-center inline-block"
+            >
+              Details
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Car 3: Hyundai Tucson -->
+      <div class="bg-white rounded-xl overflow-hidden shadow hover:shadow-lg transition text-gray-800 flex flex-col">
+        <img src="https://via.placeholder.com/600x400?text=Hyundai+Tucson" alt="Hyundai Tucson" class="w-full h-48 object-cover" />
+        <div class="p-6 flex flex-col flex-grow">
+          <h3 class="font-semibold text-xl mb-2">Hyundai Tucson (2022)</h3>
+          <p class="text-sm text-gray-600 mb-2">Spacious SUV with advanced safety features and smooth ride.</p>
+          <ul class="text-gray-700 text-sm mb-4 flex flex-wrap gap-4">
+            <li><strong>Transmission:</strong> Automatic</li>
+            <li><strong>Seats:</strong> 5</li>
+            <li><strong>Price:</strong> ₵70/day</li>
+          </ul>
+          <div class="mt-auto flex gap-4">
+            <a href="booking.html?car=Hyundai+Tucson"
+               class="flex-1 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition text-center inline-block"
+            >
+              Book now
+            </a>
+            <a href="car-details.html?car=hyundai-tucson"
+               class="flex-1 px-4 py-2 border border-emerald-600 rounded-lg text-emerald-600 hover:bg-emerald-600 hover:text-white transition text-center inline-block"
+            >
+              Details
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-emerald-800 text-center p-4 mt-12 text-gray-300">
+    <p>&copy; 2025 asab. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

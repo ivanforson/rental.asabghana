@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Car Details - asab</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-emerald-600 to-emerald-400 text-white min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <header class="bg-emerald-700/90 backdrop-blur-sm sticky top-0 z-50 shadow-md">
+    <div class="container mx-auto flex justify-between items-center p-4">
+      <h1 class="text-2xl font-bold cursor-pointer" onclick="window.location.href='index.html'">asab</h1>
+      <nav class="space-x-6">
+        <a href="index.html" class="hover:text-yellow-300 transition">Home</a>
+        <a href="Cars.html" class="hover:text-yellow-300 transition font-semibold underline">Cars</a>
+        <a href="booking.html" class="hover:text-yellow-300 transition">Booking</a>
+        <a href="contact.html" class="hover:text-yellow-300 transition">Contact</a>
+        <a href="about.html" class="hover:text-yellow-300 transition">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-grow container mx-auto p-6 max-w-5xl bg-white text-gray-800 rounded-xl shadow-lg">
+
+    <div id="car-details" class="mb-10"></div>
+
+    <hr class="my-8 border-gray-300" />
+
+    <!-- Booking Form -->
+    <section>
+      <h2 class="text-3xl font-bold mb-6 text-emerald-700">Book this Car</h2>
+      <form id="detailsBookingForm" class="max-w-lg" novalidate>
+        <input type="hidden" id="carInput" name="car" />
+        <div class="mb-4">
+          <label for="fullName" class="block font-semibold mb-2">Full Name *</label>
+          <input type="text" id="fullName" name="fullName" required
+                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+        </div>
+        <div class="mb-4">
+          <label for="email" class="block font-semibold mb-2">Email *</label>
+          <input type="email" id="email" name="email" required
+                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+        </div>
+        <div class="mb-4">
+          <label for="pickupDate" class="block font-semibold mb-2">Pick-up Date *</label>
+          <input type="date" id="pickupDate" name="pickupDate" required
+                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+        </div>
+        <div class="mb-4">
+          <label for="returnDate" class="block font-semibold mb-2">Return Date *</label>
+          <input type="date" id="returnDate" name="returnDate" required
+                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+        </div>
+        <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-semibold transition">
+          Confirm Booking
+        </button>
+      </form>
+    </section>
+
+    <hr class="my-8 border-gray-300" />
+
+    <!-- Other Cars Suggestions -->
+    <section>
+      <h3 class="text-2xl font-bold mb-6 text-emerald-700">Other Cars You Might Like</h3>
+      <div id="other-cars" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </section>
+
+  </main>
+
+  <footer class="bg-emerald-800 text-center p-4 mt-12 text-gray-300">
+    <p>&copy; 2025 asab. All rights reserved.</p>
+  </footer>
+
+<script>
+  // Sample car data
+  const cars = [
+    {
+      id: 'toyota-corolla',
+      make: 'Toyota',
+      model: 'Corolla',
+      year: 2021,
+      seats: 5,
+      price: 45,
+      transmission: 'Automatic',
+      description: 'Reliable and fuel-efficient sedan perfect for city driving and road trips.',
+      images: [
+        'https://via.placeholder.com/800x400?text=Toyota+Corolla+1',
+        'https://via.placeholder.com/800x400?text=Toyota+Corolla+2',
+        'https://via.placeholder.com/800x400?text=Toyota+Corolla+3',
+      ],
+    },
+    {
+      id: 'honda-civic',
+      make: 'Honda',
+      model: 'Civic',
+      year: 2020,
+      seats: 5,
+      price: 48,
+      transmission: 'Manual',
+      description: 'Sporty compact car with excellent handling and performance.',
+      images: [
+        'https://via.placeholder.com/800x400?text=Honda+Civic+1',
+        'https://via.placeholder.com/800x400?text=Honda+Civic+2',
+        'https://via.placeholder.com/800x400?text=Honda+Civic+3',
+      ],
+    },
+    {
+      id: 'bmw-x5',
+      make: 'BMW',
+      model: 'X5',
+      year: 2022,
+      seats: 7,
+      price: 120,
+      transmission: 'Automatic',
+      description: 'Luxury SUV with powerful engine and advanced features.',
+      images: [
+        'https://via.placeholder.com/800x400?text=BMW+X5+1',
+        'https://via.placeholder.com/800x400?text=BMW+X5+2',
+        'https://via.placeholder.com/800x400?text=BMW+X5+3',
+      ],
+    },
+  ];
+
+  // Helper: get query param
+  function getQueryParam(param) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(param);
+  }
+
+  // Show car details
+  function showCarDetails(carId) {
+    const car = cars.find(c => c.id === carId);
+    if (!car) {
+      document.getElementById('car-details').innerHTML = '<p class="text-red-600 font-bold text-center my-10">Car not found.</p>';
+      return;
+    }
+    document.getElementById('carInput').value = `${car.make} ${car.model}`;
+
+    // Build images carousel or gallery
+    let imagesHtml = car.images.map(img => 
+      `<img src="${img}" alt="${car.make} ${car.model}" class="rounded-lg shadow mb-4 w-full object-cover max-h-64" />`
+    ).join('');
+
+    document.getElementById('car-details').innerHTML = `
+      <h1 class="text-4xl font-bold mb-4">${car.make} ${car.model} (${car.year})</h1>
+      ${imagesHtml}
+      <p class="mb-4">${car.description}</p>
+      <p class="font-semibold mb-2 text-emerald-700">Transmission: ${car.transmission}</p>
+      <p class="font-semibold mb-2 text-emerald-700">Seats: ${car.seats}</p>
+      <p class="font-semibold mb-6 text-emerald-700">Price per day: ₵${car.price}</p>
+    `;
+
+    showOtherCars(carId);
+  }
+
+  // Show other cars suggestions
+  function showOtherCars(currentCarId) {
+    const container = document.getElementById('other-cars');
+    container.innerHTML = '';
+
+    cars.filter(c => c.id !== currentCarId).forEach(car => {
+      const div = document.createElement('div');
+      div.className = 'bg-white rounded-xl overflow-hidden shadow hover:shadow-md transition text-gray-800 cursor-pointer';
+      div.innerHTML = `
+        <img src="${car.images[0]}" alt="${car.make} ${car.model}" class="w-full h-40 object-cover" />
+        <div class="p-4">
+          <div class="font-semibold text-lg">${car.make} ${car.model}</div>
+          <div class="text-sm text-gray-500">${car.year} • ${car.transmission} • ${car.seats} seats</div>
+          <div class="text-emerald-600 font-bold text-lg mt-2">₵${car.price}</div>
+          <button class="mt-4 w-full px-3 py-2 bg-emerald-600 text-white rounded-md"
+            onclick="window.location.href='car-details.html?car=${car.id}'">
+            Details
+          </button>
+        </div>
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  // Booking form submit
+  document.getElementById('detailsBookingForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const fullName = e.target.fullName.value.trim();
+    const email = e.target.email.value.trim();
+    const pickupDate = e.target.pickupDate.value;
+    const returnDate = e.target.returnDate.value;
+
+    if (!fullName || !email || !pickupDate || !returnDate) {
+      alert('Please fill out all required fields.');
+      return;
+    }
+    if (returnDate < pickupDate) {
+      alert('Return date must be after pick-up date.');
+      return;
+    }
+
+    // Simple success message with fade
+    const msg = document.createElement('div');
+    msg.textContent = `✅ Booking for ${e.target.car.value} submitted! We will contact you soon.`;
+    msg.className = 'fixed top-5 right-5 bg-emerald-700 text-white px-6 py-3 rounded-lg shadow-lg opacity-0 transition-opacity duration-500 z-50';
+    document.body.appendChild(msg);
+
+    requestAnimationFrame(() => {
+      msg.style.opacity = '1';
+    });
+
+    setTimeout(() => {
+      msg.style.opacity = '0';
+      setTimeout(() => {
+        msg.remove();
+        e.target.reset();
+      }, 500);
+    }, 3000);
+  });
+
+  // On page load
+  document.addEventListener('DOMContentLoaded', () => {
+    const carParam = getQueryParam('car') || 'toyota-corolla';
+    showCarDetails(carParam.toLowerCase().replace(/ /g, '-'));
+  });
+</script>
+
+</body>
+</html>

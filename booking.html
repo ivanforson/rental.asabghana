@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Booking - asab Multi-Step</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-emerald-600 to-emerald-400 text-white min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <header class="bg-emerald-700/90 backdrop-blur-sm sticky top-0 z-50 shadow-md">
+    <div class="container mx-auto flex justify-between items-center p-4">
+      <h1 class="text-2xl font-bold">asab</h1>
+      <nav class="space-x-6">
+        <a href="index.html" class="hover:text-yellow-300 transition">Home</a>
+        <a href="Cars.html" class="hover:text-yellow-300 transition">Cars</a>
+        <a href="booking.html" class="hover:text-yellow-300 transition font-semibold underline">Booking</a>
+        <a href="contact.html" class="hover:text-yellow-300 transition">Contact</a>
+        <a href="about.html" class="hover:text-yellow-300 transition">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Multi-Step Form -->
+  <main class="flex-grow container mx-auto p-6 max-w-2xl bg-white text-gray-800 rounded-xl shadow-lg">
+
+    <!-- Image Above Heading -->
+    <div class="mb-6 max-w-md mx-auto rounded-xl overflow-hidden shadow-lg">
+      <img src="https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?auto=format&fit=crop&w=800&q=80" alt="Person holding car keys" class="w-full object-cover h-48 rounded-t-xl" />
+    </div>
+
+    <h2 class="text-4xl font-bold mb-8 text-center text-emerald-700">Book Your Ride</h2>
+
+    <form id="bookingForm" novalidate>
+      <!-- Step indicators -->
+      <div class="flex justify-center space-x-4 mb-8">
+        <div id="step1Indicator" class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-semibold">1</div>
+        <div id="step2Indicator" class="w-8 h-8 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center font-semibold">2</div>
+        <div id="step3Indicator" class="w-8 h-8 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center font-semibold">3</div>
+      </div>
+
+      <!-- Step 1: Personal Info -->
+      <section id="step1">
+        <div class="mb-6">
+          <label class="block font-semibold mb-2" for="fullName">Full Name *</label>
+          <input id="fullName" name="fullName" type="text" placeholder="John Doe" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+          <p class="mt-1 text-sm text-red-600 hidden" id="fullNameError">Please enter your full name.</p>
+        </div>
+
+        <div class="mb-6">
+          <label class="block font-semibold mb-2" for="email">Email *</label>
+          <input id="email" name="email" type="email" placeholder="example@mail.com" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+          <p class="mt-1 text-sm text-red-600 hidden" id="emailError">Please enter a valid email address.</p>
+        </div>
+
+        <div class="flex justify-end">
+          <button type="button" id="next1" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold transition">
+            Next
+          </button>
+        </div>
+      </section>
+
+      <!-- Step 2: Car & Dates -->
+      <section id="step2" class="hidden">
+        <div class="mb-6">
+          <label class="block font-semibold mb-2" for="car">Select Car *</label>
+          <select id="car" name="car" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <option value="" disabled selected>Select a car</option>
+            <option>Toyota Corolla</option>
+            <option>Honda Civic</option>
+            <option>BMW X5</option>
+          </select>
+          <p class="mt-1 text-sm text-red-600 hidden" id="carError">Please select a car.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <label class="block font-semibold mb-2" for="pickupDate">Pick-up Date *</label>
+            <input id="pickupDate" name="pickupDate" type="date" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+            <p class="mt-1 text-sm text-red-600 hidden" id="pickupDateError">Please select a pick-up date.</p>
+          </div>
+          <div>
+            <label class="block font-semibold mb-2" for="returnDate">Return Date *</label>
+            <input id="returnDate" name="returnDate" type="date" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+            <p class="mt-1 text-sm text-red-600 hidden" id="returnDateError">Please select a return date.</p>
+          </div>
+        </div>
+
+        <div class="flex justify-between">
+          <button type="button" id="back2" class="px-6 py-3 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-lg font-semibold transition">Back</button>
+          <button type="button" id="next2" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold transition">Next</button>
+        </div>
+      </section>
+
+      <!-- Step 3: Notes & Terms -->
+      <section id="step3" class="hidden">
+        <div class="mb-6">
+          <label class="block font-semibold mb-2" for="notes">Additional Notes</label>
+          <textarea id="notes" name="notes" rows="4" placeholder="Special requests or details..." class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"></textarea>
+        </div>
+
+        <div class="mb-6">
+          <label class="inline-flex items-center">
+            <input id="terms" name="terms" type="checkbox" required class="form-checkbox text-emerald-600" />
+            <span class="ml-2 text-gray-700">I agree to the <a href="terms.html" class="underline text-emerald-600">terms and conditions</a> *</span>
+          </label>
+          <p class="mt-1 text-sm text-red-600 hidden" id="termsError">You must agree before submitting.</p>
+        </div>
+
+        <div class="flex justify-between">
+          <button type="button" id="back3" class="px-6 py-3 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-lg font-semibold transition">Back</button>
+          <button type="submit" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold transition">Confirm Booking</button>
+        </div>
+      </section>
+    </form>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-emerald-800 text-center p-4 mt-12 text-gray-300">
+    <p>&copy; 2025 asab. All rights reserved.</p>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    const form = document.getElementById('bookingForm');
+    const steps = ['step1', 'step2', 'step3'];
+    let currentStep = 0;
+
+    function showStep(index) {
+      steps.forEach((stepId, i) => {
+        document.getElementById(stepId).style.display = i === index ? 'block' : 'none';
+        document.getElementById(`step${i+1}Indicator`).classList.toggle('bg-emerald-600', i === index);
+        document.getElementById(`step${i+1}Indicator`).classList.toggle('text-white', i === index);
+        document.getElementById(`step${i+1}Indicator`).classList.toggle('bg-gray-300', i !== index);
+        document.getElementById(`step${i+1}Indicator`).classList.toggle('text-gray-600', i !== index);
+      });
+    }
+
+    function validateStep(index) {
+      let valid = true;
+
+      // Hide all errors first
+      const errors = form.querySelectorAll('p.text-red-600');
+      errors.forEach(err => err.classList.add('hidden'));
+
+      if (index === 0) {
+        const fullName = form.fullName;
+        const email = form.email;
+        if (!fullName.value.trim()) {
+          document.getElementById('fullNameError').classList.remove('hidden');
+          valid = false;
+        }
+        if (!email.value.trim() || !email.checkValidity()) {
+          document.getElementById('emailError').classList.remove('hidden');
+          valid = false;
+        }
+      }
+
+      if (index === 1) {
+        const car = form.car;
+        const pickupDate = form.pickupDate;
+        const returnDate = form.returnDate;
+
+        if (!car.value) {
+          document.getElementById('carError').classList.remove('hidden');
+          valid = false;
+        }
+        if (!pickupDate.value) {
+          document.getElementById('pickupDateError').classList.remove('hidden');
+          valid = false;
+        }
+        if (!returnDate.value) {
+          document.getElementById('returnDateError').classList.remove('hidden');
+          valid = false;
+        }
+        if (pickupDate.value && returnDate.value && returnDate.value < pickupDate.value) {
+          document.getElementById('returnDateError').textContent = 'Return date must be after pick-up date.';
+          document.getElementById('returnDateError').classList.remove('hidden');
+          valid = false;
+        } else {
+          document.getElementById('returnDateError').textContent = 'Please select a return date.';
+        }
+      }
+
+      if (index === 2) {
+        const terms = form.terms;
+        if (!terms.checked) {
+          document.getElementById('termsError').classList.remove('hidden');
+          valid = false;
+        }
+      }
+
+      return valid;
+    }
+
+    showStep(currentStep);
+
+    document.getElementById('next1').addEventListener('click', () => {
+      if (validateStep(0)) {
+        currentStep = 1;
+        showStep(currentStep);
+      }
+    });
+
+    document.getElementById('next2').addEventListener('click', () => {
+      if (validateStep(1)) {
+        currentStep = 2;
+        showStep(currentStep);
+      }
+    });
+
+    document.getElementById('back2').addEventListener('click', () => {
+      currentStep = 0;
+      showStep(currentStep);
+    });
+
+    document.getElementById('back3').addEventListener('click', () => {
+      currentStep = 1;
+      showStep(currentStep);
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (validateStep(2)) {
+        // Show success message
+        const msg = document.createElement('div');
+        msg.textContent = '✅ Booking request submitted! We will contact you soon.';
+        msg.className = 'fixed top-5 right-5 bg-emerald-700 text-white px-6 py-3 rounded-lg shadow-lg opacity-0 transition-opacity duration-500 z-50';
+        document.body.appendChild(msg);
+
+        requestAnimationFrame(() => {
+          msg.style.opacity = '1';
+        });
+
+        setTimeout(() => {
+          msg.style.opacity = '0';
+          setTimeout(() => {
+            msg.remove();
+            form.reset();
+            currentStep = 0;
+            showStep(currentStep);
+            window.location.href = 'Cars.html';
+          }, 500);
+        }, 3000);
+      }
+    });
+  </script>
+
+</body>
+</html>
