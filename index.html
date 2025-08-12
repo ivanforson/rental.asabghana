@@ -5,44 +5,292 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>asab - Home</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/js/all.min.js"></script>
 </head>
-<body class="bg-gradient-to-br from-emerald-600 to-emerald-400 text-white min-h-screen flex flex-col">
+<body class="bg-gray-50 min-h-screen flex flex-col">
 
   <!-- Navbar -->
   <header class="bg-emerald-700/90 backdrop-blur-sm sticky top-0 z-50 shadow-md">
     <div class="container mx-auto flex justify-between items-center p-4">
-      <h1 class="text-2xl font-bold">asab</h1>
-      <nav class="space-x-6">
-        <a href="index.html" class="hover:text-yellow-300 transition font-semibold underline">Home</a>
-        <a href="Cars.html" class="hover:text-yellow-300 transition">Cars</a>
-        <a href="booking.html" class="hover:text-yellow-300 transition">Booking</a>
-        <a href="contact.html" class="hover:text-yellow-300 transition">Contact</a>
-        <a href="about.html" class="hover:text-yellow-300 transition">About</a>
+      <h1 class="text-2xl font-bold cursor-pointer text-white" onclick="window.location.href='index.html'">asab</h1>
+      <nav class="space-x-6 text-white">
+        <a href="index.html" class="hover:text-yellow-300 font-semibold underline">Home</a>
+        <a href="cars.html" class="hover:text-yellow-300">Cars</a>
+        <a href="booking.html" class="hover:text-yellow-300">Booking</a>
+        <a href="contact.html" class="hover:text-yellow-300">Contact</a>
+        <a href="about.html" class="hover:text-yellow-300">About</a>
       </nav>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <main class="flex-grow container mx-auto p-6 max-w-5xl">
-    <h2 class="text-4xl font-bold mb-6 text-center text-white drop-shadow-lg">Find the perfect car for your trip</h2>
-    
-    <div class="rounded-xl overflow-hidden shadow-lg mb-8 mx-auto max-w-4xl">
-      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80" alt="Car on road" class="w-full object-cover h-64 md:h-96" />
-    </div>
+  <main class="container mx-auto flex flex-col md:flex-row gap-6 p-6 flex-grow">
 
-    <form class="bg-white text-gray-800 rounded-xl shadow-lg p-6 max-w-3xl mx-auto">
-      <div class="grid gap-4 md:grid-cols-4">
-        <input type="text" placeholder="City or airport" class="border rounded-md p-2 text-sm" />
-        <input type="date" class="border rounded-md p-2 text-sm" />
-        <input type="date" class="border rounded-md p-2 text-sm" />
-        <button class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md">Search</button>
+    <!-- Left Sidebar Filters -->
+    <aside class="md:w-1/4 bg-white rounded-xl p-6 shadow">
+      <!-- Filter Price -->
+      <details open class="mb-6">
+        <summary class="font-semibold text-gray-700 cursor-pointer mb-3">Filter Price</summary>
+        <div class="flex flex-col space-y-4">
+          <input type="range" id="priceRange" min="0" max="950" step="10" value="950" class="w-full" />
+          <div class="flex items-center justify-between text-gray-600 text-sm">
+            <div>Min price</div>
+            <div>Max price</div>
+          </div>
+          <div class="flex items-center justify-between">
+            <input type="number" id="minPrice" min="0" max="950" value="0" class="border rounded p-1 w-1/2 mr-2 text-sm" />
+            <input type="number" id="maxPrice" min="0" max="950" value="950" class="border rounded p-1 w-1/2 text-sm" />
+          </div>
+          <div class="flex justify-between">
+            <button id="clearPrice" class="text-emerald-600 hover:underline">Clear</button>
+            <button id="applyPrice" class="bg-emerald-600 text-white px-4 py-1 rounded hover:bg-emerald-700 transition">Apply</button>
+          </div>
+        </div>
+      </details>
+
+      <!-- Categories -->
+      <details open>
+        <summary class="font-semibold text-gray-700 cursor-pointer mb-3">Categories</summary>
+        <form id="categoryForm" class="flex flex-col space-y-2 text-gray-700 text-sm">
+          <label><input type="checkbox" name="category" value="Bus" class="mr-2"> Bus</label>
+          <label><input type="checkbox" name="category" value="Luxury" class="mr-2"> Luxury</label>
+          <label><input type="checkbox" name="category" value="Private Jet" class="mr-2"> Private Jet</label>
+          <label><input type="checkbox" name="category" value="Saloon" class="mr-2"> Saloon</label>
+          <button type="button" id="clearCategories" class="text-emerald-600 hover:underline mt-2 self-start">Clear</button>
+        </form>
+      </details>
+    </aside>
+
+    <!-- Main Content -->
+    <section class="md:w-3/4 flex flex-col">
+
+      <!-- Top Bar -->
+      <div class="flex justify-between items-center mb-6">
+        <div id="carCount" class="text-gray-700 font-semibold">0 cars</div>
+        <div class="flex items-center space-x-3">
+          <label for="sort" class="text-gray-600 text-sm font-semibold">Sort</label>
+          <select id="sort" class="border rounded p-1 text-sm">
+            <option value="newest">New</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="name-asc">Name: A - Z</option>
+            <option value="name-desc">Name: Z - A</option>
+          </select>
+        </div>
       </div>
-    </form>
+
+      <!-- Cars List -->
+      <div id="carsList" class="space-y-6">
+        <!-- Car cards injected here by JS -->
+      </div>
+
+    </section>
   </main>
 
-  <!-- Footer -->
   <footer class="bg-emerald-800 text-center p-4 mt-12 text-gray-300">
     <p>&copy; 2025 asab. All rights reserved.</p>
   </footer>
+
+  <script>
+    // Sample cars data (add more as needed)
+    const cars = [
+      {
+        id: 1,
+        category: 'SUV',
+        name: 'Toyota Land Cruiser Sequoia V8',
+        image: 'https://via.placeholder.com/300x180?text=Toyota+Land+Cruiser+Sequoia+V8',
+        passengers: 7,
+        transmission: 'Auto',
+        price: 156,
+        rating: 0,
+        reviews: 0,
+      },
+      {
+        id: 2,
+        category: 'SUV',
+        name: 'Toyota Land Cruiser Prado (New Model)',
+        image: 'https://via.placeholder.com/300x180?text=Toyota+Land+Cruiser+Prado',
+        passengers: 7,
+        transmission: 'Auto',
+        price: 130,
+        rating: 0,
+        reviews: 0,
+      },
+      {
+        id: 3,
+        category: 'Bus',
+        name: '15 Seater Nissan Urvan / Toyota Hiace',
+        image: 'https://via.placeholder.com/300x180?text=15+Seater+Nissan+Urvan',
+        passengers: 16,
+        transmission: 'Auto',
+        price: 132,
+        rating: 0,
+        reviews: 0,
+      },
+      {
+        id: 4,
+        category: 'Luxury',
+        name: 'Mercedes-Benz S-Class',
+        image: 'https://via.placeholder.com/300x180?text=Mercedes-Benz+S-Class',
+        passengers: 5,
+        transmission: 'Auto',
+        price: 300,
+        rating: 0,
+        reviews: 0,
+      },
+      {
+        id: 5,
+        category: 'Saloon',
+        name: 'Honda Accord',
+        image: 'https://via.placeholder.com/300x180?text=Honda+Accord',
+        passengers: 5,
+        transmission: 'Manual',
+        price: 90,
+        rating: 0,
+        reviews: 0,
+      },
+    ];
+
+    // DOM references
+    const carsList = document.getElementById('carsList');
+    const carCount = document.getElementById('carCount');
+    const priceRange = document.getElementById('priceRange');
+    const minPriceInput = document.getElementById('minPrice');
+    const maxPriceInput = document.getElementById('maxPrice');
+    const applyPriceBtn = document.getElementById('applyPrice');
+    const clearPriceBtn = document.getElementById('clearPrice');
+    const categoryForm = document.getElementById('categoryForm');
+    const clearCategoriesBtn = document.getElementById('clearCategories');
+    const sortSelect = document.getElementById('sort');
+
+    let filteredCars = [...cars];
+
+    // Update price range slider and inputs sync
+    minPriceInput.addEventListener('input', () => {
+      let val = parseInt(minPriceInput.value) || 0;
+      if(val < 0) val = 0;
+      if(val > parseInt(maxPriceInput.value)) val = parseInt(maxPriceInput.value);
+      minPriceInput.value = val;
+      priceRange.value = val;
+    });
+
+    maxPriceInput.addEventListener('input', () => {
+      let val = parseInt(maxPriceInput.value) || 950;
+      if(val > 950) val = 950;
+      if(val < parseInt(minPriceInput.value)) val = parseInt(minPriceInput.value);
+      maxPriceInput.value = val;
+      priceRange.value = val;
+    });
+
+    priceRange.addEventListener('input', () => {
+      maxPriceInput.value = priceRange.value;
+    });
+
+    // Clear price filter
+    clearPriceBtn.addEventListener('click', () => {
+      minPriceInput.value = 0;
+      maxPriceInput.value = 950;
+      priceRange.value = 950;
+      applyFilters();
+    });
+
+    // Clear categories
+    clearCategoriesBtn.addEventListener('click', () => {
+      [...categoryForm.elements['category']].forEach(chk => chk.checked = false);
+      applyFilters();
+    });
+
+    // Apply price filter
+    applyPriceBtn.addEventListener('click', () => {
+      applyFilters();
+    });
+
+    // Category filter change
+    categoryForm.addEventListener('change', () => {
+      applyFilters();
+    });
+
+    // Sort change
+    sortSelect.addEventListener('change', () => {
+      applyFilters();
+    });
+
+    // Apply filters and sorting
+    function applyFilters() {
+      const minPrice = parseInt(minPriceInput.value) || 0;
+      const maxPrice = parseInt(maxPriceInput.value) || 950;
+      const selectedCategories = [...categoryForm.elements['category']]
+        .filter(chk => chk.checked)
+        .map(chk => chk.value);
+
+      // Filter by price and category
+      filteredCars = cars.filter(car => {
+        const priceMatch = car.price >= minPrice && car.price <= maxPrice;
+        const categoryMatch = selectedCategories.length ? selectedCategories.includes(car.category) : true;
+        return priceMatch && categoryMatch;
+      });
+
+      // Sort
+      const sortBy = sortSelect.value;
+      filteredCars.sort((a, b) => {
+        switch (sortBy) {
+          case 'price-asc': return a.price - b.price;
+          case 'price-desc': return b.price - a.price;
+          case 'name-asc': return a.name.localeCompare(b.name);
+          case 'name-desc': return b.name.localeCompare(a.name);
+          case 'newest': return b.id - a.id; // Assuming higher id = newer
+          default: return 0;
+        }
+      });
+
+      renderCars();
+    }
+
+    // Render car cards
+    function renderCars() {
+      carCount.textContent = `${filteredCars.length} car${filteredCars.length !== 1 ? 's' : ''}`;
+      carsList.innerHTML = '';
+
+      filteredCars.forEach(car => {
+        const card = document.createElement('article');
+        card.className = "bg-white rounded-lg shadow p-4 flex gap-6 items-center";
+
+        card.innerHTML = `
+          <img src="${car.image}" alt="${car.name}" class="w-40 h-24 object-cover rounded-lg flex-shrink-0" />
+          <div class="flex flex-col flex-grow">
+            <div class="text-xs text-gray-500 uppercase mb-1">${car.category}</div>
+            <h3 class="font-bold text-lg text-gray-900">${car.name}</h3>
+            <div class="flex items-center gap-6 mt-2 text-gray-600 text-sm">
+
+              <div class="flex items-center gap-1">
+                <i class="fas fa-users"></i>
+                <span>${car.passengers}</span>
+              </div>
+
+              <div class="flex items-center gap-1">
+                <i class="fas fa-cog"></i>
+                <span>${car.transmission}</span>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="flex flex-col items-end gap-4">
+            <div class="text-emerald-600 font-semibold text-lg">$${car.price.toFixed(2)}</div>
+            <a href="car-details.html?car=${encodeURIComponent(car.name.toLowerCase().replace(/ /g, '-'))}" 
+               class="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700 transition text-sm whitespace-nowrap">
+               View details
+            </a>
+          </div>
+        `;
+
+        carsList.appendChild(card);
+      });
+    }
+
+    // Initialize filters and render
+    applyFilters();
+
+  </script>
+
 </body>
 </html>
